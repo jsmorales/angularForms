@@ -1,0 +1,191 @@
+<h4 class="mt-3">Formularios <small>por código</small></h4>
+<hr>
+<form [formGroup]="form" (submit)="getSubmitForm()" novalidate>
+
+  <div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Id</label>
+      <div class="col-8">
+
+        <input class="form-control" [ngClass]="{'is-valid': form.controls['id'].valid, 'is-invalid': form.controls['id'].errors?.pattern || form.controls['id'].errors?.required && form.controls['id'].touched}"
+               type="text"
+               placeholder="Id"
+               formControlName="id">
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          <p *ngIf="form.controls['id'].errors?.required">Por favor escriba un id.</p>
+          <p *ngIf="form.get('id').errors?.pattern">El valor {{form.get('id').errors.pattern.actualValue}} no es vàlido, debe ser un nùmero de 4 cifras.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Nombre</label>
+      <div class="col-8">
+
+        <input class="form-control" [ngClass]="{'is-valid': form.controls['firstName'].valid, 'is-invalid': form.controls['firstName'].errors?.minlength || form.controls['firstName'].errors?.required && form.controls['firstName'].touched}"
+               type="text"
+               placeholder="Nombre"
+               formControlName="firstName">
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          <p *ngIf="form.controls['firstName'].errors?.required">Por favor escriba un nombre.</p>
+          <p *ngIf="form.controls['firstName'].errors?.minlength">Por favor escriba un nombre de {{form.controls['firstName'].errors.minlength.requiredLength}} caractéres lleva {{form.controls['firstName'].errors.minlength.actualLength}}.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Apellido</label>
+      <div class="col-8">
+
+        <input class="form-control" [ngClass]="{'is-valid': form.get('lastName').valid, 'is-invalid': form.get('lastName').errors?.minlength || form.get('lastName').errors?.required && form.get('lastName').touched}"
+               type="text"
+               placeholder="Apellido" formControlName="lastName">
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          <p *ngIf="form.get('lastName').errors?.required">Por favor escriba un apellido.</p>
+          <p *ngIf="form.get('lastName').errors?.minlength">Por favor escriba un apellido de {{form.get('lastName').errors.minlength.requiredLength}} caractéres lleva {{form.get('lastName').errors.minlength.actualLength}}.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Correo</label>
+    <div class="col-md-8">
+
+      <input class="form-control" [ngClass]="{'is-valid': form.get('email').valid, 'is-invalid': form.get('email').errors?.pattern || form.get('email').errors?.required && form.get('email').touched}"
+             type="email"
+             placeholder="Correo electrónico" formControlName="email">
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+      <div class="invalid-feedback">
+        <p *ngIf="form.get('email').errors?.required">Por favor escriba un correo electrónico.</p>
+        <p *ngIf="form.get('email').errors?.pattern">El valor {{form.get('email').errors.pattern.actualValue}} no es vàlido.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Username</label>
+    <div class="col-md-8">
+
+      <input class="form-control" [ngClass]="{'is-valid': form.get('username').valid, 'is-invalid': form.get('username').errors?.existeusuario || form.get('username').errors?.required && form.get('username').touched}"
+             type="text"
+             placeholder="Username" formControlName="username">
+      <div *ngIf="form.status === 'PENDING'">
+        Validando Username <i class="fa fa-sync fa-spin"></i>
+      </div>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+      <div class="invalid-feedback">
+        <p *ngIf="form.get('username').errors?.required">Por favor escriba un nombre de usuario.</p>
+        <p *ngIf="form.get('username').errors?.existeusuario">Este usuario {{form.get('username').errors.userValidated}} ya existe, por favor seleccione uno diferente.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Password</label>
+    <div class="col-md-8">
+
+      <input class="form-control" [ngClass]="{'is-valid': form.get('password1').valid, 'is-invalid': form.get('password1').errors?.pattern || form.get('password1').errors?.required && form.get('password1').touched}"
+             type="password"
+             placeholder="Contraseña" formControlName="password1">
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+      <div class="invalid-feedback">
+        <p *ngIf="form.get('password1').errors?.required">Por favor escriba una contraseña.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Rrepetir Password</label>
+    <div class="col-md-8">
+
+      <input class="form-control" [ngClass]="{'is-valid': form.get('password2').valid, 'is-invalid': form.get('password2').errors?.pattern || form.get('password2').errors?.required && form.get('password2').touched}"
+             type="password"
+             placeholder="Contraseña Repetida" formControlName="password2">
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+      <div class="invalid-feedback">
+        <p *ngIf="form.get('password2').errors?.required">Por favor repita la contraseña.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button type="submit" class="btn btn-outline-primary" [disabled]="!form.valid"> <!-- [disabled]="!form.valid" -->
+        Guardar
+      </button>
+    </div>
+  </div>
+
+</form>
+
+<p>Valid form: {{form.valid}}</p>
+<p>Status form: {{form.status}}</p>
+
+<div *ngIf="loading" class="alert alert-info" role="alert">
+  Cargando Tabla <i class="fa fa-sync fa-spin"></i>
+</div>
+
+<table *ngIf="!loading" class="table mb-3">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">First</th>
+    <th scope="col">Last</th>
+    <th scope="col">Handle</th>
+    <th scope="col">Options</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let person of peopleExample">
+    <th scope="row">{{person.id}}</th>
+    <td>{{person.firstName}}</td>
+    <td>{{person.lastName}}</td>
+    <td>{{person.email}}</td>
+    <td><button class="btn btn-info btn-sm" (click)="getIdPerson(person.id)" data-toggle="modal" data-target="#exampleModal">Ver</button></td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Persona: {{peopleGet?.firstName}} {{peopleGet?.lastName}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Nombre: {{peopleGet?.firstName}}</p>
+        <p>Apellido: {{peopleGet?.lastName}}</p>
+        <p>Email: {{peopleGet?.email}}</p>
+        <pre>{{peopleGet | json}}</pre>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

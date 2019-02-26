@@ -1,0 +1,8 @@
+<div class="card mb-3" style="width: 18rem;">
+  <img [src]="profile.picture" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Username: {{profile.name}}</h5>
+    <h5 class="card-title">Nickname: {{profile.nickname}}</h5>
+    <p class="card-text">Actualizado: {{profile.updated_at | date: 'yyyy - MMM - dd'}}</p>
+  </div>
+</div>

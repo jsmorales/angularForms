@@ -1,0 +1,127 @@
+<h4 class="mt-3">Formularios <small>por template</small></h4>
+<hr>
+<form (ngSubmit)="guardar(formulario)" #formulario="ngForm" novalidate>
+
+  <div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Nombre</label>
+      <div class="col-8">
+        <!-- ngModel solo sabe que es un campo del formulario-->
+        <!-- [ngModel]="user.nombre" carga valores por defecto de esa variable a los campos del formulario-->
+        <!-- [(ngModel)]="user.nombre" emite todos los eventos del control [(ngModel)]="user.nombre"  {{nombre.valid ? 'is-valid':'is-invalid'}} nombre.touched -- solo aplica si ya fue tocado el control-->
+        <input #nombre="ngModel" class="form-control" [ngClass]="{'is-valid': nombre.valid, 'is-invalid': nombre.errors?.minlength || nombre.errors?.required && nombre.touched}"
+               type="text"
+               placeholder="Nombre"
+               name="nombre"
+               [(ngModel)]="user.nombre"
+               required
+               minlength="4">
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          <p *ngIf="nombre.errors?.required">Por favor escriba un nombre.</p>
+          <p *ngIf="nombre.errors?.minlength">Por favor escriba un nombre de {{nombre.errors.minlength.requiredLength}} caractéres lleva {{nombre.errors.minlength.actualLength}}.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Apellido</label>
+      <div class="col-8">
+
+        <input #apellido="ngModel" class="form-control" [ngClass]="{'is-valid': apellido.valid, 'is-invalid': apellido.errors?.minlength || apellido.errors?.required && apellido.touched}"
+               type="text"
+               placeholder="Apellido" name="apellido" [(ngModel)]="user.apellido" minlength="4" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          <p *ngIf="apellido.errors?.required">Por favor escriba un apellido.</p>
+          <p *ngIf="apellido.errors?.minlength">Por favor escriba un nombre de {{apellido.errors.minlength.requiredLength}} caractéres lleva {{apellido.errors.minlength.actualLength}}.</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Correo</label>
+    <div class="col-md-8">
+      <!-- Se pueden definir patrones para poder validar el campo-->
+      <input #email="ngModel" class="form-control" [ngClass]="{'is-valid': email.valid, 'is-invalid': email.errors?.required || email.errors?.pattern && email.touched}"
+             type="email"email
+             placeholder="Correo electrónico"
+             name="email"
+             [(ngModel)]="user.email"
+             required
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+      >
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+      <div class="invalid-feedback">
+        <p *ngIf="email.errors?.required">Por favor escriba un email.</p>
+        <p *ngIf="email.errors?.pattern">El valor {{email.errors.pattern.actualValue}} no es vàlido.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Paìs</label>
+    <div class="col-md-8">
+      <select #pais="ngModel" [(ngModel)]="user.pais" class="form-control" name="pais" required [ngClass]="{'is-valid': pais.valid, 'is-invalid': pais.errors?.required && pais.touched}">
+        <option *ngFor="let pais of paises" value="{{pais.codigo}}">{{pais.nombre}}</option>
+      </select>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+      <div class="invalid-feedback">
+        <p *ngIf="pais.errors?.required">Por favor seleccione un país.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Género</label>
+    <div class="col-md-8">
+      <div class="custom-control custom-radio custom-control-inline">
+        <input [(ngModel)]="user.genero" type="radio" id="genero1" name="genero" class="custom-control-input" value="masculino">
+        <label class="custom-control-label" for="genero1">Masculino</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input [(ngModel)]="user.genero" type="radio" id="genero2" name="genero" class="custom-control-input" value="femenino">
+        <label class="custom-control-label" for="genero2">Femenino</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Terminos Y Condiciones</label>
+    <div class="col-md-8">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="user.acepta" name="acepta" required>
+        <label class="form-check-label">
+          Acepta Terminos y condiciones.
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button type="submit" class="btn btn-outline-primary" [ngClass]="{'disabled': !formulario.valid}" [disabled]="!formulario.valid">
+        Guardar
+      </button>
+    </div>
+  </div>
+
+</form>
+
+<pre>
+  {{user | json}}
+</pre>
+
